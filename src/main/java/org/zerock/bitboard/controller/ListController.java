@@ -52,7 +52,7 @@ public class ListController extends HttpServlet {
         log.info("==============================2");
         log.info(dtoList);
 
-        request.setAttribute("dtolist", dtoList);
+        request.setAttribute("dtoList", dtoList);
 
         PageMaker pageMaker = new PageMaker(pageDTO.getPage(),pageDTO.getSize(),1230);
 

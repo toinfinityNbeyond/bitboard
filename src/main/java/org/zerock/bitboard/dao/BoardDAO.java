@@ -13,13 +13,18 @@ public enum BoardDAO {
 
     private static final String PREFIX = "org.zerock.bitboard.dao.BoardMapper";
 
-    public void insert(BoardDTO boardDTO) throws RuntimeException {
+    public Integer insert(BoardDTO boardDTO) throws RuntimeException {
+
+        Integer bno = null;
+
         try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {  // openSession 에 true를 넣지면 항상 session.commit이 필요
         session.insert(PREFIX+ ".insert",boardDTO);
+        bno = boardDTO.getBno();
     }catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
+        return bno;
     }
 
     public BoardDTO select(Integer bno) throws RuntimeException {
@@ -56,7 +61,7 @@ public enum BoardDAO {
     public void update(BoardDTO boardDTO) throws RuntimeException{
 
         try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {
-            session.update(PREFIX+ ".list", boardDTO );  // 파라미터가 없으면 생략
+            session.update(PREFIX+ ".update", boardDTO );  // 파라미터가 없으면 생략
         }catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());

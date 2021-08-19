@@ -13,13 +13,39 @@
     <title>Title</title>
 </head>
 <body>
+<script>
+    let num = '${param.bno}'
+
+    if(num){
+        alert(num)
+        window.history.replaceState(null,'','/board/list');
+    }
+</script>
 <h1>List Page</h1>
 
 <h4>${pageMaker}</h4>
 
+<form action="/board/list" method="get">
+    <input type="hidden" name="page" value="1">
+    <select name="size">
+        <option value="10" ${pageMaker.size ==10? "selected":""}>10</option>
+        <option value="20" ${pageMaker.size ==20? "selected":""}>20</option>
+        <option value="50" ${pageMaker.size ==50? "selected":""}>50</option>
+        <option value="100" ${pageMaker.size ==100? "selected":""}>100</option>
+    </select>
+    <button type="submit">적용</button>
+</form>
+
+
 <ul>
     <c:forEach items="${dtoList}" var="dto">
-        <li>${dto}</li>
+        <li>
+            <div>
+            <div>${dto.bno}</div>
+            <div><a href="/board/read?bno=${dto.bno}&page=${pageMaker.page}&size=${pageMaker.size}"> ${dto.title} </a></div>
+            <div>${dto.viewcount}</div>
+            </div>
+        </li>
     </c:forEach>
 </ul>
 
@@ -37,6 +63,10 @@
         font-family: "Roboto Light";
         border: 1px solid greenyellow;
     }
+    .current {
+       font-size: large;
+    }
+
 </style>
 <ul class="pageList">
     <c:if test="${pageMaker.prev}">
@@ -44,7 +74,7 @@
     </c:if>
 
         <c:forEach begin="${pageMaker.start}" end="${pageMaker.end}" var="page">
-        <li><a href="/board/list?page=${page}&size=${pageMaker.size}">${page}</a></li>
+        <li class="${page == pageMaker.page?"current":""}"><a href="/board/list?page=${page}&size=${pageMaker.size}">${page}</a></li>
     </c:forEach>
 
     <c:if test="${pageMaker.next}">

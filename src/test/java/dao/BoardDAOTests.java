@@ -18,6 +18,10 @@ public class BoardDAOTests {
                 .build();
 
         BoardDAO.INSTANCE.insert(boardDTO);
+
+        log.info("============================");
+        log.info(boardDTO);
+
     }
 
 
@@ -42,7 +46,7 @@ public class BoardDAOTests {
     @Test
     public void testUpdate() {
         BoardDTO boardDTO =
-                BoardDTO.builder().bno(3).title("Update").content("update").build();
+                BoardDTO.builder().bno(3).title("Update").content("Update").build();
         BoardDAO.INSTANCE.update(boardDTO);
     }
 

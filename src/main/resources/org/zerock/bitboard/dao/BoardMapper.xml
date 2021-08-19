@@ -6,6 +6,10 @@
     <insert id="insert">
         insert into board (title, content, writer)
         values (#{title},#{content},#{writer})
+        <selectKey order="AFTER" resultType="int" keyProperty="bno">
+        select last_insert_id()
+
+        </selectKey>
     </insert>
 
     <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO">
@@ -22,7 +26,7 @@
 
     <update id="update">
     update board set title = #{title} ,content = #{content} , updatedate = #{bno}
-    where  bon =#{bno}
+    where  bno =#{bno}
     </update>
 
     <select id="selectCount" resultType="int">
