@@ -7,11 +7,11 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 @Log4j2
-@WebFilter(urlPatterns ={"/*"} )
+@WebFilter(urlPatterns ={"/*"} ) // urlPatterns ={"/*"}. 모든 jsp에 결합
 public class LogFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) throws ServletException { // In . 한번
         log.info("--------------------------------");
         log.info("--------------------------------");
         log.info("init filter");
@@ -33,7 +33,7 @@ public class LogFilter implements Filter {
     }
 
     @Override
-    public void destroy() {
+    public void destroy() {  // OUT 나온다.들어가는거랑 나가는거는.한번
         Filter.super.destroy();
     }
 }

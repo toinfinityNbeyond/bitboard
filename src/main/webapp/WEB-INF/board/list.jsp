@@ -14,11 +14,11 @@
 </head>
 <body>
 <script>
-    let num = '${param.bno}'
+    let num = '${param.bno}' // 새로작성한 글번호가 몇번인지 url에 파라미터가 경고창에 뜬다. -> 경고창의 메시지가 url 새로운 번호가 부여된다.
 
     if(num){
         alert(num)
-        window.history.replaceState(null,'','/board/list');
+        window.history.replaceState(null,'','/board/list'); // 링크창 안뜨게 막아준다. 뒤에 경로로 간다.
     }
 </script>
 <h1>List Page</h1>

@@ -28,10 +28,12 @@ public class PageMaker {
         // 결과 12.3 end는 10
         // 값이 end 보다 크면 다음으로 가는 링크가 있는것.
 
-        if(end * size > total) {  // 200  > total(123)
-            end = (int)(Math.ceil(total/(double)size)); // Math.ceil 올림 11.1 -> 12로
+//        if(end * size > total) {  // 200  > total(123)
+//            end = (int)(Math.ceil(total/(double)size)); // Math.ceil 올림 11.1 -> 12로
+//
+//        }
 
-        }
+        end = end*size > total ? (int)(Math.ceil(total/(double)size)) :end;
 
 
     }

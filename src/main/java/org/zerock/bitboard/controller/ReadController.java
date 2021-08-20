@@ -42,13 +42,9 @@ public class ReadController extends HttpServlet {
             BoardDTO boardDTO = BoardService.INSTANCE.read(bno);
 
             request.setAttribute("boardDTO" ,boardDTO);
-            request.setAttribute("pageDTO",pageDTO);
+            request.setAttribute("pageDTO",pageDTO);  // 택배 포장
 
-            request.getRequestDispatcher("/WEB-INF/board/read.jsp").forward(request,response);
-
-
-
-
+            request.getRequestDispatcher("/WEB-INF/board/read.jsp").forward(request,response); // forward 밀어보내~송장!
 
 
     }

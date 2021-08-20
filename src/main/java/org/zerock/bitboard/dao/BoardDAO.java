@@ -2,6 +2,7 @@ package org.zerock.bitboard.dao;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.session.SqlSession;
+import org.zerock.bitboard.dto.AttachDTO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
@@ -15,17 +16,33 @@ public enum BoardDAO {
 
     public Integer insert(BoardDTO boardDTO) throws RuntimeException {
 
-        Integer bno = null;
+        Integer bno = null;  //Integer는 null 값 가능. int 는 불가능.
 
-        try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {  // openSession 에 true를 넣지면 항상 session.commit이 필요
+        try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession()) {  // openSession 에 true를 넣지면 항상 session.commit이 필요
         session.insert(PREFIX+ ".insert",boardDTO);
         bno = boardDTO.getBno();
-    }catch(Exception e){
+
+        List<AttachDTO> attachDTOList = boardDTO.getAttachDTOList();
+        if (attachDTOList !=null && attachDTOList.size() > 0) {
+            for (AttachDTO attachDTO:attachDTOList) { //Attach 테이블의 개수만큼 insert가 이뤄져야함.
+                attachDTO.setBno(bno);
+                session.insert(PREFIX + ".insertAttach",attachDTO);
+            }
+
+
+        }
+//        log.info("-------------------------");
+//        log.info(attachDTOList);
+
+
+        session.commit();
+        }catch(Exception e){
+            e.printStackTrace();
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
         return bno;
-    }
+        }
 
     public BoardDTO select(Integer bno) throws RuntimeException {
         BoardDTO dto = null;
@@ -51,17 +68,17 @@ public enum BoardDAO {
     public void delete(Integer bno) throws RuntimeException{
 
         try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {
-            session.delete(PREFIX+ ".list", bno);  // 파라미터가 없으면 생략
+            session.delete(PREFIX+ ".delete", bno);  // 파라미터가 없으면 생략
         }catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public void update(BoardDTO boardDTO) throws RuntimeException{
+    public void update(BoardDTO dto) throws RuntimeException{
 
         try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)) {
-            session.update(PREFIX+ ".update", boardDTO );  // 파라미터가 없으면 생략
+            session.update(PREFIX+ ".update", dto );  // 파라미터가 없으면 생략
         }catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
