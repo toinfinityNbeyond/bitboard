@@ -25,9 +25,9 @@ public class ModifyController extends HttpServlet {
                 .content(request.getParameter("content"))
                 .build();
 
-        BoardService.INSTANCE.modify(boardDTO);
+         BoardService.INSTANCE.modify(boardDTO);
 
-        response.sendRedirect("/board/list");
+        response.sendRedirect("/board/list?bno=");
 
     }
 }

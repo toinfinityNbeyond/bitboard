@@ -45,8 +45,9 @@ public enum BoardService {
     public void modify(BoardDTO boardDTO) throws RuntimeException {
 
         log.info("BoardService modify.................." );
-
+//
 //        BoardDAO.INSTANCE.update(bno);
+
     }
 
 
